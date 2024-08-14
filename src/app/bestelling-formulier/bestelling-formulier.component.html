@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <h1>Groentenwinkelketen de vrolijke konijntjes</h1>
+    <p>Bestel nu, geleverd binnen het uur!</p>
+</div>
+
+<div class="container-fluid">
+    <h1>Bestelformulier</h1>
+    <form #userForm="ngForm">
+
+        <div class="form-group">
+            <label for="Winkel">Kies winkel: </label>
+            <select name="Winkel" class="custom-select">
+                <option *ngFor="let winkel of winkels$ | async">{{winkel.naam}}</option>
+            </select>
+        </div>
+    
+        <div class="form-group">
+            <label for="Groente">Kies Groente: </label>
+            <select name="Groente" class="custom-select">
+                <option *ngFor="let groente of groenten$ | async">{{groente.naam}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="Aantal">Aantal/Gewicht (stuk): </label>
+            <input type="number">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Bestellen</button>
+    </form>
+</div>
