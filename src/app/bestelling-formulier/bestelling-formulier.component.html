@@ -5,27 +5,51 @@
 
 <div class="container-fluid">
     <h1>Bestelformulier</h1>
-    <form #userForm="ngForm">
+    <form #userForm="ngForm" novalidate (ngSubmit)="onSubmit(userForm.value)">
 
         <div class="form-group">
-            <label for="Winkel">Kies winkel: </label>
-            <select name="Winkel" class="custom-select">
+
+            <label for="winkel">Kies winkel: </label>
+
+            <select name="winkel" class="custom-select" [(ngModel)]="winkel" #winkelKeuze="ngModel" required [class.is-invalid]="winkelKeuze.invalid  && winkelKeuze.touched">
+
                 <option *ngFor="let winkel of winkels$ | async">{{winkel.naam}}</option>
+
             </select>
+
+            <small class="text-danger" [class.d-none]="winkelKeuze.valid || winkelKeuze.untouched">Keuze verplicht.</small>
+
         </div>
     
+
         <div class="form-group">
-            <label for="Groente">Kies Groente: </label>
-            <select name="Groente" class="custom-select">
-                <option *ngFor="let groente of groenten$ | async">{{groente.naam}}</option>
+
+            <label for="groente">Kies Groente: </label>
+
+            <select name="groente" class="custom-select" [(ngModel)]="groente" #groenteKeuze="ngModel" required [class.is-invalid]="groenteKeuze.invalid  && groenteKeuze.touched" (change)="setRegex(groente)">
+                <option *ngFor="let groente of groenten$ | async" [ngValue]="groente">{{groente.naam}}</option>
             </select>
+
+            <small class="text-danger" [class.d-none]="groenteKeuze.valid || groenteKeuze.untouched">Keuze verplicht.</small>
+
         </div>
+
 
         <div class="form-group">
-            <label for="Aantal">Aantal/Gewicht (stuk): </label>
-            <input type="number">
+
+            <label for="aantal">Aantal/Gewicht (stuk): </label>
+
+            <input name="aantal" class="form-control" type="number" [(ngModel)]="aantal" #number="ngModel" required min="1" [class.is-invalid]="number.invalid && number.touched" [pattern]="regex">
+
+            <div *ngIf="number.invalid && number.touched">
+                <small class="text-danger" *ngIf="number.errors?.['required']">Aantal verplicht.</small>
+                <small class="text-danger" *ngIf="number.errors?.['min']">Aantal moet hoger zijn dan 0.</small> 
+                <small class="text-danger" *ngIf="number.errors?.['pattern']">Decimaal enkel bij kg, g aub.</small>
+            </div>
+            
         </div>
 
-        <button class="btn btn-primary" type="submit">Bestellen</button>
+
+        <button [disabled]="userForm.form.invalid" class="btn btn-primary" type="submit">Bestellen</button>
     </form>
 </div>

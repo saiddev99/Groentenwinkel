@@ -1,0 +1,35 @@
+<hr>
+<div class="container-fluid overflow-hidden">
+    <p style="display: inline;" class="p-0">WinkelMandje</p>
+    <button [hidden]="!besteld" (click)="convertCurrency()" class="center" type="button">{{currency}}</button>
+</div>
+<hr>
+
+<table [hidden]="!besteld" class="table table">
+<thead>
+    <tr>
+        <th>Winkel</th>
+        <th>Groente</th>
+        <th>Aantal</th>
+        <th>Prijs</th>
+        <th>Totaal</th>
+    </tr>
+</thead>
+<tbody>
+    <tr *ngFor="let bestelling of winkelmandjes$ | async">
+        <td>{{bestelling.winkel}}</td>
+        <td>{{bestelling.groente.naam}}</td>
+        <td>{{bestelling.aantal}}</td>
+        <td>{{bestelling.groente.prijs | currency: currentCurreny: 'code'}}</td>
+        <td (mousedown)="GetTotalPrice()">{{(bestelling.aantal * bestelling.groente.prijs).toFixed(2) | currency: currentCurreny: 'code'}}</td>
+    </tr>
+</tbody>
+<tfoot style="background: rgba(0, 215, 0, 0.208);">
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{GetTotalPrice().toFixed(2) | currency: currentCurreny: 'code'}}</td>
+    </tr>
+</table>
