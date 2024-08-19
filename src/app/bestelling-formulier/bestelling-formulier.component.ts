@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { WinkelServiceService } from '../services/winkel-service.service';
 import { Observable} from 'rxjs';
 import { Winkel } from '../models/winkel.model';
@@ -22,7 +22,9 @@ groente: Groente
 aantal: number
 regex: string = ''
 
-constructor (private winkelService: WinkelServiceService, private groentenService: GroenteServiceService, private winkelmandService: WinkelmandServiceService){}
+constructor (private winkelService: WinkelServiceService, private groentenService: GroenteServiceService, 
+  private winkelmandService: WinkelmandServiceService,
+  private cd:ChangeDetectorRef){}
 
 
 ngOnInit() {
@@ -39,7 +41,8 @@ setRegex(value: Groente)
   else
   {
     this.regex = '';
-  }  
+  } 
+  this.cd.detectChanges();
 }
 
 
