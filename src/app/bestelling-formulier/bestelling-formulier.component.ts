@@ -34,7 +34,7 @@ setRegex(value: Groente)
 {
   if(!(value.gewichtHoeveelheid.includes('kg') || value.gewichtHoeveelheid.includes('g')))
   {
-    this.regex = '[0-9]';
+    this.regex = '[0-9]*';
   }
   else
   {
