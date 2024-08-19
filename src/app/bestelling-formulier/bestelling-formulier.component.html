@@ -13,7 +13,7 @@
 
             <select name="winkel" class="custom-select" [(ngModel)]="winkel" #winkelKeuze="ngModel" required [class.is-invalid]="winkelKeuze.invalid  && winkelKeuze.touched">
 
-                <option *ngFor="let winkel of winkels$ | async">{{winkel.naam}}</option>
+                <option *ngFor="let winkel of winkels$ | async" title="{{winkel.adres}}, {{winkel.post}} {{winkel.gemeente}}">{{winkel.naam}}</option>
 
             </select>
 
